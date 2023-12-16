@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Consulta</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: rgb(224, 15, 15);
+        }
+
+        pre {
+            background-color: rgb(223, 238, 238);
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+            white-space: pre-wrap;
+            margin-top: 20px;
+        }
+
+        #suporteLink {
+            margin-top: 10px;
+            color: #3498db;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        #suporteLink:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>CONSULTA QUACK</h1>
+    <br>
+    <p>by: biel_xtz</p>
+    <label for="cpfInput">Digite o CPF:</label>
+    <input type="text" id="cpfInput" placeholder="Insira o CPF aqui">
+    <button onclick="consultarAPI()">Consultar</button>
+
+    <h2>Informações: </h2>
+    <pre id="resultado-api"></pre>
+    <a href="https://t.me/SuporteArcadianRobot" id="suporteLink" target="_blank"></a>
+
+    <script>
+        function consultarAPI() {
+            const cpf = document.getElementById('cpfInput').value;
+            if (!cpf) {
+                alert('CPF INVÁLIDO BURRO');
+                return;
+            }
+
+            const apiUrl = `token/050fdbe1-46cd-4808-b4bf-44ffc89cd801/CpfModerado/${cpf}`;
+            
+            const requisicao = new XMLHttpRequest();
+            requisicao.open('GET', apiUrl, true);
+
+            requisicao.onload = function() {
+                if (requisicao.status === 200) {
+                    const respostaApi = JSON.parse(requisicao.responseText);
+                    document.getElementById('resultado-api').innerText = JSON.stringify(respostaApi, null, 2);
+
+                    // Após a consulta, oculta o link
+                    document.getElementById('suporteLink').style.display = 'none';
+                } else {
+                    console.error('Erro na API');
+                }
+            };
+
+            requisicao.send();
+        }
+    </script>
+    
+</body>
+</html>
